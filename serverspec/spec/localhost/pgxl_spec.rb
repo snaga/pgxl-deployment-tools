@@ -57,14 +57,6 @@ describe file('/var/lib/pgxl/9.2/data') do
   it { should be_grouped_into 'pgxl' }
 end
 
-# if Coordinator
-describe file('/var/lib/pgxl/9.2/data/coord') do
-  it { should be_directory }
-  it { should be_mode 700 }
-  it { should be_owned_by 'pgxl' }
-  it { should be_grouped_into 'pgxl' }
-end
-
 # ----------------------------------------------------------------
 # Tests for GTM
 # ----------------------------------------------------------------
@@ -135,6 +127,13 @@ end
 # ----------------------------------------------------------------
 # Tests for Coordinator node
 # ----------------------------------------------------------------
+describe file('/var/lib/pgxl/9.2/data/coord') do
+  it { should be_directory }
+  it { should be_mode 700 }
+  it { should be_owned_by 'pgxl' }
+  it { should be_grouped_into 'pgxl' }
+end
+
 describe file('/var/lib/pgxl/9.2/data/coord/PG_VERSION') do
   it { should be_file }
   it { should be_mode 600 }
