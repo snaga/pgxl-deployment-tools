@@ -54,53 +54,59 @@ cookbook_file "/tmp/postgres-xl92-pltcl-9.2-34.1.x86_64.rpm" do
   mode 00644
   checksum "51d1c6e540f004fee20a1cb27ff4e9a252f7b8ac7f5ea238e2822a6a9b6c0a62"
 end
-cookbook_file "/tmp/postgres-xl92-pltcl-9.2-34.1.x86_64.rpm" do
+cookbook_file "/tmp/postgres-xl92-server-9.2-34.1.x86_64.rpm" do
   mode 00644
   checksum "548deee20f9ecbd11965f923d760eb68955bf47dfd13c54eeda7a679907cc4c2"
 end
 
-package "postgres-xl92" do
-  source "/tmp/postgres-xl92-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-contrib" do
-  source "/tmp/postgres-xl92-contrib-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-debuginfo" do
-  source "/tmp/postgres-xl92-debuginfo-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-devel" do
-  source "/tmp/postgres-xl92-devel-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-docs" do
-  source "/tmp/postgres-xl92-docs-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-gtm" do
-  source "/tmp/postgres-xl92-gtm-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-libs" do
+# install libs first because of its dependencies.
+rpm_package "postgres-xl92-libs" do
   source "/tmp/postgres-xl92-libs-9.2-34.1.x86_64.rpm"
   action :install
 end
-package "postgres-xl92-plperl" do
+rpm_package "postgres-xl92" do
+  source "/tmp/postgres-xl92-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-gtm" do
+  source "/tmp/postgres-xl92-gtm-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-server" do
+  source "/tmp/postgres-xl92-server-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-contrib" do
+  source "/tmp/postgres-xl92-contrib-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-debuginfo" do
+  source "/tmp/postgres-xl92-debuginfo-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-devel" do
+  source "/tmp/postgres-xl92-devel-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-docs" do
+  source "/tmp/postgres-xl92-docs-9.2-34.1.x86_64.rpm"
+  action :install
+end
+rpm_package "postgres-xl92-plperl" do
   source "/tmp/postgres-xl92-plperl-9.2-34.1.x86_64.rpm"
   action :install
 end
-package "postgres-xl92-plpython" do
+rpm_package "postgres-xl92-plpython" do
   source "/tmp/postgres-xl92-plpython-9.2-34.1.x86_64.rpm"
   action :install
 end
-package "postgres-xl92-pltcl" do
+
+# FIXME:
+# postgres-xl92-pltcl has a dependency issue, so it requires
+# --nodeps option with rpm_package resource.
+rpm_package "postgres-xl92-pltcl" do
   source "/tmp/postgres-xl92-pltcl-9.2-34.1.x86_64.rpm"
-  action :install
-end
-package "postgres-xl92-pltcl" do
-  source "/tmp/postgres-xl92-pltcl-9.2-34.1.x86_64.rpm"
+  options "--nodeps"
   action :install
 end
 
